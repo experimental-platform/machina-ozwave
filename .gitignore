@@ -22,3 +22,7 @@ _testmain.go
 *.exe
 *.test
 *.prof
+zwcfg*.xml
+zwscene.xml
+OZW_Log.txt
+node_modules

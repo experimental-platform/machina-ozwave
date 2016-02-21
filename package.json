@@ -1,0 +1,23 @@
+{
+  "name": "machina-ozwave",
+  "version": "1.0.0",
+  "description": "install go-openzwave:",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/experimental-platform/machina-ozwave.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/experimental-platform/machina-ozwave/issues"
+  },
+  "homepage": "https://github.com/experimental-platform/machina-ozwave#readme",
+  "dependencies": {
+    "nanomsg": "^3.1.0",
+    "openzwave-shared": "^1.1.7"
+  }
+}
