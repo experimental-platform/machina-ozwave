@@ -91,9 +91,11 @@ zwave.on('value removed', function(nodeid, comclass, index) {
     delete nodes[nodeid]['classes'][comclass][index];
   notification = {
     type: "valueremoved",
-    node: nodes[nodeId],
     com_class: comclass,
     index: index,
+  }
+  if (nodeid != 'undefined') {
+    notification.node = nodes[nodeId]
   }
   pub.send(JSON.stringify(notification));
 });
