@@ -38,6 +38,7 @@ zwave.on('driver failed', function() {
 zwave.on('node added', function(nodeid) {
   console.log('=================== NODE ADDED! ====================');
   nodes[nodeid] = {
+    id: nodeid,
     manufacturer: '',
     manufacturerid: '',
     product: '',
@@ -67,11 +68,11 @@ zwave.on('value added', function(nodeid, comclass, value) {
 
 zwave.on('value changed', function(nodeid, comclass, value) {
   oldvalue = nodes[nodeid]['classes'][comclass][value.index];
-  if (!nodes[nodeid]['ready']) {
-    console.log('node%d: changed: %d:%s:%s->%s', nodeid, comclass,
-        value['label'],
-        oldvalue['value'],
-        value['value']);
+  if (nodes[nodeid]['ready']) {
+    // console.log('node%d: changed: %d:%s:%s->%s', nodeid, comclass,
+    //     value['label'],
+    //     oldvalue['value'],
+    //     value['value']);
   }
   nodes[nodeid]['classes'][comclass][value.index] = value;
   notification = {
@@ -95,12 +96,13 @@ zwave.on('value removed', function(nodeid, comclass, index) {
     index: index,
   }
   if (nodeid != 'undefined') {
-    notification.node = nodes[nodeId]
+    notification.node = nodes[nodeid]
   }
   pub.send(JSON.stringify(notification));
 });
 
 zwave.on('node ready', function(nodeid, nodeinfo) {
+  nodes[nodeid]['id'] = nodeid;
   nodes[nodeid]['manufacturer'] = nodeinfo.manufacturer;
   nodes[nodeid]['manufacturerid'] = nodeinfo.manufacturerid;
   nodes[nodeid]['product'] = nodeinfo.product;
@@ -163,6 +165,9 @@ zwavedriverpaths = {
 console.log("connecting to " + zwavedriverpaths[os.platform()]);
 pub.bind(addr)
 zwave.connect(zwavedriverpaths[os.platform()]);
+// zwave.enablePoll(6, 50)
+// zwave.enablePoll(12, 50)
+// zwave.enablePoll(9, 38)
 
 process.on('SIGINT', function() {
   console.log('disconnecting...');
